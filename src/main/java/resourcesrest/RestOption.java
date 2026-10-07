@@ -52,8 +52,24 @@ public class RestOption {
     @Path("{id}")
     @Consumes(MediaType.APPLICATION_JSON)
     public Response updateOption(@PathParam("id") int id, Option op){
-
-        optB.updateOption(id, op);
+        if(optB.updateOption(id, op)){
+            return Response.status(200).entity(op).build();
+        }
+        else{
+            return Response.status(404).build();
+        }
+    }
+    @GET
+    @Path("{code}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getOptionByCode(@PathParam("code") int code){
+        Option op = optB.getOptionByCode(code);
+        if(op != null){
+            return Response.status(200).entity(op).build();
+        }
+        else{
+            return Response.status(404).build();
+        }
     }
 }
 
